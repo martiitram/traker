@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tracker{% endblock %}
+
+{% block body %}
+    <h1>Tasks</h1>
+{#    MESSAGES#}
+    {% if error_message is defined %}
+        <div style="color:red">{{ error_message }}</div>
+    {% endif %}
+    {% if success_message is defined %}
+        <div>{{ success_message }}</div>
+    {% endif %}
+
+{#    ACTIONS#}
+    {% if  action  is same as(constant('App\\Domain\\TrackerAction::Start') ) %}
+        <form action="{{ path('app_start_task') }}" method="post">
+            <input type="text" name="task_name" placeholder="Task name" required>
+            <button type="submit">Start</button>
+        </form>
+    {% endif %}
+    {% if  action  is same as(constant('App\\Domain\\TrackerAction::Stop') ) %}
+        <form action="{{ path('app_stop_task') }}" method="post">
+            <button type="submit">Stop</button>
+        </form>
+    {% endif %}
+{#TASK TABLE#}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Start</th>
+            <th>End</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.getName().name() }}</td>
+                <td>{{ task.getStart()|date('Y-m-d H:i:s') }}</td>
+                <td>{{ task.getEnd()? task.getEnd()|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
