@@ -16,6 +16,7 @@
     {% if currentTask is defined %}
         <p>Task in progress:<b> {{ currentTask.getName().name() }}</b></p>
         <p>Started: <b>{{ currentTask.getStart()|date('Y-m-d H:i:s') }}</b></p>
+        {% include 'timer.html.twig' with {'startTime': currentTask.getStart()|date('Y-m-d H:i:s')}%}
     {% else %}
         asdf
     {% endif %}

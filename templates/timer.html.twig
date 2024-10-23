@@ -1,0 +1,26 @@
+<div>
+
+    <p>Elapsed Time: <b><span id="timer">00:00:00</span></b></p>
+</div>
+
+<script>
+    function timeSinceStart(startDateTime) {
+        const startTime = new Date(startDateTime); // Convert to Date object
+        const now = new Date(); // Current time
+
+        // Calculate the difference in seconds
+        const diffInSeconds = Math.floor((now - startTime) / 1000);
+
+        // Calculate the hours, minutes, and seconds
+        const hours = Math.floor(diffInSeconds / 3600);
+        const minutes = Math.floor((diffInSeconds % 3600) / 60);
+        const seconds = diffInSeconds % 60;
+
+        // Return the formatted time difference
+        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    setInterval(function() {
+        document.getElementById("timer").textContent = timeSinceStart('{{ startTime }}');
+    }, 1000); // Update every second
+</script>
