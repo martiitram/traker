@@ -52,16 +52,6 @@ class TrackerController extends AbstractController
         );
         $vars['tasks'] = $listTasks->getTodayTasks();
 
-
-        $availableTrackerAction = new AvailableTrackerAction($taskRepository);
-        $vars['action'] = $availableTrackerAction->execute();
-
-        if ($request->query->get('error_message')) {
-            $vars['error_message'] = $request->query->get('error_message');
-        }
-        if ($request->query->get('success_message')) {
-            $vars['success_message'] = $request->query->get('success_message');
-        }
         return $this->render('tracker/record.html.twig', $vars);
     }
 
