@@ -153,6 +153,40 @@ final class DateRangeTest extends TestCase
 
         $this->expectException(DateRangeWithStartAfterEnd::class);
 
-        $dateRange->setEndDate($newTimeEnd);
+        $dateRange->setEnd($newTimeEnd);
+    }
+
+    public function testSetEndTimeIfNullActuallySetEndTimeIfNull()
+    {
+        $timeStart = new \DateTime('2024-10-23 01:00:00');
+        $newTimeEnd = new \DateTime('2024-10-24 03:00:00');
+        $dateRange = new DateRange($timeStart);
+
+
+        $dateRange->setEndIfNull($newTimeEnd);
+
+
+        $this->assertEquals(
+            $newTimeEnd->format('Y-m-d H:i:s'),
+            $dateRange->getEnd()->format('Y-m-d H:i:s')
+        );
+    }
+
+
+    public function testSetEndTimeIfNullDoesNothingIfEndTimeIsSet()
+    {
+        $timeStart = new \DateTime('2024-10-23 01:00:00');
+        $timeEnd = new \DateTime('2024-10-24 03:00:00');
+        $newTimeEnd = new \DateTime('2024-10-22 03:00:00');
+        $dateRange = new DateRange($timeStart, $timeEnd);
+
+
+        $dateRange->setEndIfNull($newTimeEnd);
+
+
+        $this->assertEquals(
+            $timeEnd->format('Y-m-d H:i:s'),
+            $dateRange->getEnd()->format('Y-m-d H:i:s')
+        );
     }
 }

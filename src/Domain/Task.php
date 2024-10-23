@@ -45,13 +45,18 @@ class Task
         return $this->id;
     }
 
-    public function setEndTime(\DateTime $dateTime): void
+    public function setEnd(\DateTime $dateTime): void
     {
-        $this->dateRange->setEndDate($dateTime);
+        $this->dateRange->setEnd($dateTime);
     }
 
     public function getDateRange(): DateRange
     {
         return $this->dateRange;
+    }
+
+    public function setEndIfNull(\DateTime $dateTime): void
+    {
+        $this->dateRange->setEndIfNull($dateTime);
     }
 }

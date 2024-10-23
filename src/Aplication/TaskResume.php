@@ -28,6 +28,7 @@ class TaskResume
 
         $taskResume= new \App\Domain\TaskResume($dateRange);
         foreach ($tasks as $task){
+            $task->setEndIfNull($now);
             $taskResume->addTask($task);
         }
         return $taskResume;

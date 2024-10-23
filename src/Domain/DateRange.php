@@ -31,7 +31,7 @@ class DateRange
         return $this->end;
     }
 
-    public function setEndDate(DateTime $dateTime): void
+    public function setEnd(DateTime $dateTime): void
     {
         $this->end = $dateTime;
         $this->validateDateRange();
@@ -73,5 +73,12 @@ class DateRange
     public function __toString(): string
     {
         return $this->start->format('Y-m-d/m/y H:i:s').'-'.$this->end->format('Y-m-d/m/y H:i:s');
+    }
+
+    public function setEndIfNull(DateTime $dateTime): void
+    {
+        if (is_null($this->end)) {
+            $this->setEnd($dateTime);
+        }
     }
 }

@@ -30,7 +30,7 @@ class StopTask
 
         $this->verifyValidStoppingTaskGuard($task);
 
-        $task->setEndTime($this->timeRepository->getCurrentDateTime());
+        $task->setEnd($this->timeRepository->getCurrentDateTime());
         $this->taskRepository->save($task);
     }
 

@@ -70,4 +70,37 @@ class TaskResumeTest extends TestCase
             $resume->getTotalTime()->format('H:i:s')
         );
     }
+
+
+    public function testTaskResumeFillNotEndedTasksWithTheValueUntilNow()
+    {
+        $DateTimeStart = new \DateTime('2024-10-21 00:00:00');
+
+        $Task = new Task(
+            new TaskId('0192a20f-0294-7c73-b246-f4cfdb48f4a2'),
+            new TaskName('Test Task'),
+            new DateRange($DateTimeStart)
+        );
+
+        $taskRepository = Mockery::mock(TaskRepository::class);
+        $taskRepository->shouldReceive('getList')->once()
+            ->andReturn([$Task]);
+        $timeRepository = Mockery::mock(TimeRepository::class);
+        $timeRepository->shouldReceive('getCurrentDateTime')
+            ->andReturn(new \DateTime('2024-10-21 00:20:00'));
+
+        $taskResume = new TaskResume($taskRepository, $timeRepository);
+        $resume = $taskResume->getTodayResume();
+
+        $this->assertEquals(
+            '00:20:00',
+            $resume->getResume()['Test Task']->format('H:i:s')
+        );
+
+
+        $this->assertEquals(
+            '00:20:00',
+            $resume->getTotalTime()->format('H:i:s')
+        );
+    }
 }
