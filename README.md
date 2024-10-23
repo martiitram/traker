@@ -1,43 +1,46 @@
-
 # TRACKER
 
-This project contains a Symfony application that serves as a simple task tracker.
+This project contains a Symfony application that serves as a simple task tracker. The application is dockerized, and for proper interaction, it is recommended to use **Make**.
+
 
 ## Prerequisites
 
-- **Database**: You need a **MariaDB 10.4.32** instance running on port **3306** with **no password**. Alternatively, you can modify the `.env` file and set your database configuration in the `DATABASE_URL` environment variable.
+- Ensure **Docker** and **Docker Compose** are installed and running on your machine.
+- Ensure you have **Make** installed.
 
 ## Setup Instructions
 
-1. **Install Dependencies**:
+1. **Build Docker Images**:
 
    ```bash
-   composer install -n
+   make build
 
-2. **Run Database Migrations**:
-
+2. **Install Composer Dependencies and Run Symfony Migrations**:
    ```bash
-   bin/console doctrine:migrations:migrate --no-interaction
+   make prepare
 
-3. **Start the Server:**
-
+3. **Run Docker Instances:**
    ```bash
-   symfony server:start
-You can now access the application at http://localhost:8080/tracker.
+   make run
+
+You can now access the application at http://localhost:300/tracker.
+
+You also have access to http://localhost:300/task, which provides a controller with CRUD functionality for manually setting up data for testing purposes.
 
 ## Available Console Commands
-You have three custom commands available to interact with the tracker:
+
+You have three custom commands available to interact with the tracker via the console:
 
 1. Start a Task:
     ```bash
-   php bin/console app:start TASK_NAME
+   docker exec -it docker-symfony-be php bin/console app:stop TASK_NAME
 
 
 2. Stop the Current Task:
     ```bash
-    php bin/console app:stop
+    docker exec -it docker-symfony-be php bin/console app:stop
 
 3. List Tracked Tasks:
 
    ```bash
-    php bin/console app:trackerList
+    docker exec -it docker-symfony-be php bin/console app:trackerList
