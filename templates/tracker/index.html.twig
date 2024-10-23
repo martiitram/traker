@@ -16,7 +16,7 @@
     {% if currentTask is not null %}
         <p>Task in progress:<b> {{ currentTask.getName().name() }}</b></p>
         <p>Started: <b>{{ currentTask.getStart()|date('Y-m-d H:i:s') }}</b></p>
-        {% include 'timer.html.twig' with {'startTime': currentTask.getStart()|date('Y-m-d H:i:s')}%}
+        {% include 'timer.html.twig' with {'startTime': currentTask.getStart()|date('Y-m-d H:i:s'), 'timerId':currentTask.getId().getTaskId()}%}
     {% endif %}
     {% if  action  is same as(constant('App\\Domain\\TrackerAction::Start') ) %}
         <form action="{{ path('app_start_task') }}" method="post">

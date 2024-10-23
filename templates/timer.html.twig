@@ -1,10 +1,9 @@
 <div>
-    <p>Elapsed Time: <b><span id="timer">00:00:00</span></b></p>
+
+    <p>Elapsed Time: <b><span id="timer{{ timerId }}{{ "now"|date("Y-m-d-H-i-s") }}">00:00:00</span></b></p>
 </div>
 
 <script>
-    let timerInterval; // Variable to hold the interval ID
-
     function timeSinceStart(startDateTime) {
         const startTime = new Date(startDateTime); // Convert to Date object
         const now = new Date(); // Current time
@@ -21,19 +20,16 @@
         return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
-    // Function to start the timer
-    function startTimer(startTime) {
-        // Clear any existing timer interval
-        if (timerInterval) {
-            clearInterval(timerInterval);
-        }
 
-        // Set a new timer interval
-        timerInterval = setInterval(function() {
-            document.getElementById("timer").textContent = timeSinceStart(startTime);
-        }, 1000); // Update every second
+    function updateTimer(startDateTime, timerId) {
+        const timerElement = document.getElementById(timerId);
+        if(!timerElement) return;
+        timerElement.textContent = timeSinceStart(startDateTime);
+
+
+        setTimeout(() => updateTimer(startDateTime, timerId), 1000);
     }
 
-    // Call startTimer with the initial start time
-    startTimer('{{ startTime }}');
+    updateTimer('{{ startTime }}', 'timer{{ timerId }}{{ "now"|date("Y-m-d-H-i-s") }}')
+
 </script>
