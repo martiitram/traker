@@ -3,7 +3,7 @@
 {% block title %}Tracker{% endblock %}
 
 {% block body %}
-    <h1>Tasks</h1>
+    <h1>Tracker</h1>
     {#    MESSAGES #}
     {% if error_message is defined %}
         <div style="color:red">{{ error_message }}</div>
@@ -13,12 +13,10 @@
     {% endif %}
 
     {#    ACTIONS #}
-    {% if currentTask is defined %}
+    {% if currentTask is not null %}
         <p>Task in progress:<b> {{ currentTask.getName().name() }}</b></p>
         <p>Started: <b>{{ currentTask.getStart()|date('Y-m-d H:i:s') }}</b></p>
         {% include 'timer.html.twig' with {'startTime': currentTask.getStart()|date('Y-m-d H:i:s')}%}
-    {% else %}
-        asdf
     {% endif %}
     {% if  action  is same as(constant('App\\Domain\\TrackerAction::Start') ) %}
         <form action="{{ path('app_start_task') }}" method="post">

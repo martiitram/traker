@@ -29,4 +29,8 @@ RUN mv php-cs-fixer /usr/local/bin/php-cs-fixer
 
 RUN mkdir -p /appdata/www
 
+# Create application directory and set the working directory
+RUN mkdir -p /appdata/www/var/cache /appdata/www/var/log \
+    && chown -R appuser:appuser /appdata/www/var
+
 WORKDIR /appdata/www

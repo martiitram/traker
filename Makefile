@@ -24,6 +24,10 @@ build: ## Rebuilds all the containers
 
 prepare: ## Runs backend commands
 	$(MAKE) composer-install
+	$(MAKE) execute-migrations
+
+execute-migrations: ## Execute the Symfony migrations
+	U_ID=${UID} docker exec --user ${UID} -it ${DOCKER_BE} php bin/console doctrine:migrations:migrate --no-interaction
 
 # Backend commands
 composer-install: ## Installs composer dependencies
