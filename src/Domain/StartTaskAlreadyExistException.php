@@ -4,7 +4,7 @@ namespace App\Domain;
 
 use Exception;
 
-class StartTaskAlredyExistException extends Exception
+class StartTaskAlreadyExistException extends Exception
 {
     public function __construct(Task $existingTask)
     {

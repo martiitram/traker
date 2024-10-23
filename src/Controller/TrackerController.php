@@ -8,7 +8,7 @@ use App\Aplication\StartTask;
 use App\Aplication\StopTask;
 use App\Aplication\TaskResume;
 use App\Domain\NoActiveTask;
-use App\Domain\StartTaskAlredyExistException;
+use App\Domain\StartTaskAlreadyExistException;
 use App\Domain\TaskAlreadyStopped;
 use App\Repository\BasicTimeRepository;
 use App\Repository\SymfonyTaskRepository;
@@ -57,7 +57,7 @@ class TrackerController extends AbstractController
             $name = $request->get('task_name');
             $startTask->execute($name);
             $vars['success_message'] = 'Task Started';
-        } catch (StartTaskAlredyExistException $e) {
+        } catch (StartTaskAlreadyExistException $e) {
             $vars['error_message'] = $e->getMessage();
         }
         return $this->redirectToRoute('app_tracker', $vars, Response::HTTP_SEE_OTHER);

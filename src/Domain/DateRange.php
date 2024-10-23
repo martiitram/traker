@@ -13,6 +13,7 @@ class DateRange
     {
         $this->start = $start;
         $this->end = $end;
+        $this->validateDateRange();
     }
 
     public function haveEnd(): bool
@@ -33,6 +34,7 @@ class DateRange
     public function setEndDate(DateTime $dateTime): void
     {
         $this->end = $dateTime;
+        $this->validateDateRange();
     }
 
     public static function getTodayDateRange(DateTime $dateTime): DateRange
@@ -56,6 +58,20 @@ class DateRange
 
     public function elapsedDatetime(): \DateInterval|false
     {
-        return $this->start->diff($this->end);
+        $dateInterval = $this->end->diff($this->start);
+        $dateInterval->invert = false;
+        return $dateInterval;
+    }
+
+    private function validateDateRange(): void
+    {
+        if(!is_null($this->end) && $this->end < $this->start) {
+            throw new DateRangeWithStartAfterEnd($this->start, $this->end);
+        }
+    }
+
+    public function __toString(): string
+    {
+        return $this->start->format('Y-m-d/m/y H:i:s').'-'.$this->end->format('Y-m-d/m/y H:i:s');
     }
 }

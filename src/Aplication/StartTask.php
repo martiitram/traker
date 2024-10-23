@@ -4,7 +4,7 @@ namespace App\Aplication;
 
 use App\Domain\DateRange;
 use App\Domain\IdGeneratorRepository;
-use App\Domain\StartTaskAlredyExistException;
+use App\Domain\StartTaskAlreadyExistException;
 use App\Domain\Task;
 use App\Domain\TaskId;
 use App\Domain\TaskName;
@@ -26,7 +26,7 @@ class StartTask
     }
 
     /**
-     * @throws StartTaskAlredyExistException
+     * @throws StartTaskAlreadyExistException
      */
     public function execute(string $name): void
     {
@@ -41,12 +41,12 @@ class StartTask
     }
 
     /**
-     * @throws StartTaskAlredyExistException
+     * @throws StartTaskAlreadyExistException
      */
     private function noCurrentActiveTaskGuard(?Task $task): void
     {
         if (!is_null($task) && $task->isRunning()) {
-            throw new StartTaskAlredyExistException($task);
+            throw new StartTaskAlreadyExistException($task);
         }
     }
 
