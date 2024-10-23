@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tracker{% endblock %}
+
+{% block body %}
+    <h1>Tasks record</h1>
+{#    MESSAGES#}
+
+{#TASK TABLE#}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Start</th>
+            <th>End</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.getName().name() }}</td>
+                <td>{{ task.getStart()|date('Y-m-d H:i:s') }}</td>
+                <td>{{ task.getEnd()? task.getEnd()|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

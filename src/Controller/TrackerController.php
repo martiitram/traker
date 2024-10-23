@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Aplication\AvailableTrackerAction;
+use App\Aplication\GetCurrentTask;
 use App\Aplication\ListTasks;
 use App\Aplication\StartTask;
 use App\Aplication\StopTask;
@@ -24,6 +25,27 @@ class TrackerController extends AbstractController
     public function index(Request $request, SymfonyTaskRepository $taskRepository): Response
     {
         $vars = [];
+
+        $availableTrackerAction = new AvailableTrackerAction($taskRepository);
+        $vars['action'] = $availableTrackerAction->execute();
+
+        $getCurrentTask = new GetCurrentTask($taskRepository);
+        $vars['currentTask'] = $getCurrentTask->execute();
+
+
+        if ($request->query->get('error_message')) {
+            $vars['error_message'] = $request->query->get('error_message');
+        }
+        if ($request->query->get('success_message')) {
+            $vars['success_message'] = $request->query->get('success_message');
+        }
+        return $this->render('tracker/index.html.twig', $vars);
+    }
+
+    #[Route('/tracker/record', name: 'app_tracker_record', methods: ['GET', 'POST'])]
+    public function record(Request $request, SymfonyTaskRepository $taskRepository): Response
+    {
+        $vars = [];
         $listTasks = new ListTasks(
             $taskRepository,
             new BasicTimeRepository()
@@ -40,7 +62,7 @@ class TrackerController extends AbstractController
         if ($request->query->get('success_message')) {
             $vars['success_message'] = $request->query->get('success_message');
         }
-        return $this->render('tracker/index.html.twig', $vars);
+        return $this->render('tracker/record.html.twig', $vars);
     }
 
     #[Route('/tracker/start', name: 'app_start_task', methods: ['GET', 'POST'])]

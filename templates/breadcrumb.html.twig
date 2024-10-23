@@ -1,0 +1,27 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/tracker/resume">Resume</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/tracker">Current Task</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/tracker/record">Record</a>
+        </li>
+    </ol>
+</nav>
+
+{#<nav aria-label="breadcrumb">#}
+{#    <ol class="breadcrumb">#}
+{#        {% for breadcrumb in breadcrumbs %}#}
+{#            {% if loop.last %}#}
+{#                <li class="breadcrumb-item active" aria-current="page">{{ breadcrumb.label }}</li>#}
+{#            {% else %}#}
+{#                <li class="breadcrumb-item">#}
+{#                    <a href="{{ breadcrumb.url }}">{{ breadcrumb.label }}</a>#}
+{#                </li>#}
+{#            {% endif %}#}
+{#        {% endfor %}#}
+{#    </ol>#}
+{#</nav>#}
